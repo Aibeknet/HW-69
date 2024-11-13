@@ -14,6 +14,7 @@ interface ShowsState {
   showInfo: Show | null;
   isLoading: boolean;
   error: boolean;
+  searchTerm: '',
 }
 
 const initialState: ShowsState = {
@@ -21,12 +22,13 @@ const initialState: ShowsState = {
   showInfo: null,
   isLoading: false,
   error: false,
+  searchTerm: '',
 }
 
 export const fetchShows = createAsyncThunk(
   'shows/fetchShows',
   async (term: string): Promise<Show[]> => {
-    const response = await axios.get('http://api.tvmaze.com/search/shows?q=${term}');
+    const response = await axios.get(`http://api.tvmaze.com/search/shows?q=${term}`);
     return response.data.map((item: {show: Show}) => item.show)
   }
 );
@@ -45,6 +47,9 @@ const showsSlice = createSlice({
   reducers: {
     resetShowInfo: (state) => {
       state.showInfo = null;
+    },
+    setSearchTerm: (state, action) => {
+      state.searchTerm = action.payload;
     },
   },
 
@@ -69,5 +74,5 @@ const showsSlice = createSlice({
   },
 });
 
-export const { resetShowInfo } = showsSlice.actions;
+export const { resetShowInfo, setSearchTerm } = showsSlice.actions;
 export default showsSlice.reducer;
