@@ -31,9 +31,10 @@ const ShowInfo: React.FC = () => {
 
   return (
     <Box sx={{ maxWidth: 900, margin: 'auto', padding: 2, backgroundColor: 'white', borderRadius: '8px', boxShadow: 3 }}>
+
       <AutocompleteSearch />
 
-      <Typography variant="h3" align="center" sx={{ marginBottom: 3, color: '#333' }}>
+      <Typography variant="h3" align="center" sx={{ marginBottom: 3, marginTop: 3, color: '#333' }}>
         {showInfo.name}
       </Typography>
 

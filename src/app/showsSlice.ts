@@ -14,7 +14,8 @@ interface ShowsState {
   showInfo: Show | null;
   isLoading: boolean;
   error: boolean;
-  searchTerm: '',
+  searchTerm: string;
+  errorMessage: string | null;
 }
 
 const initialState: ShowsState = {
@@ -23,6 +24,7 @@ const initialState: ShowsState = {
   isLoading: false,
   error: false,
   searchTerm: '',
+  errorMessage: null,
 }
 
 export const fetchShows = createAsyncThunk(
@@ -64,9 +66,10 @@ const showsSlice = createSlice({
         state.searchShows = action.payload;
         state.error = false;
       })
-      .addCase(fetchShows.rejected, (state) => {
+      .addCase(fetchShows.rejected, (state, action) => {
         state.isLoading = false;
         state.error = true;
+        state.errorMessage = action.error.message || 'Unknown error';
       })
       .addCase(fetchShowInfo.fulfilled, (state, action) => {
         state.showInfo = action.payload;
